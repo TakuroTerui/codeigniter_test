@@ -11,5 +11,4 @@
     <?php echo form_open('news/delete/'.$news_item['id']); ?>
         <button type="submit">削除</button>
     </form>
-
 <?php endforeach; ?>
