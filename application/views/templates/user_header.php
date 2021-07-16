@@ -4,18 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="<?php echo base_url(); ?>">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'greenhorn_works') }}</title>
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
+    <!-- <title></title> -->
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="application/public/css/app.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="{{ asset('css/navbar-fixed-left.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/clock.css') }}" rel="stylesheet">
+    <link href="application/public/css/navbar-fixed-left.min.css" rel="stylesheet">
+    <link href="application/public/css/custom.css" rel="stylesheet">
+    <link href="application/public/css/clock.css" rel="stylesheet">
     <!-- Scripts -->
-    <script>
-    </script>
 </head>
 
 <body>
@@ -30,9 +29,7 @@
           <span class="icon-bar"></span>
         </button>
         <!-- Branding Image -->
-        <a class="navbar-brand" href="{{ route('home') }}">
-            {{ config('app.name') }}
-        </a>
+        <a class="navbar-brand" href="">GizLog</a>
       </div>
 
       <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -40,20 +37,19 @@
         <div class="nav navbar-nav navbar-right nav-user">
           <div class="dropdown">
             <a class="user-name-box dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              <img src="{{ Auth::user()->avatar }}">&nbsp;&nbsp;&nbsp;{{ Auth::user()->name }}
+              <img src="">
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>
                 <a href="">プロフィール編集</a>
               </li>
               <li>
-                <a href="{{ route('logout') }}"
+                <a href=""
                     onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
                     Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                  {{ csrf_field() }}
+                <form id="logout-form" action="" method="POST" style="display: none;">
                 </form>
               </li>
             </ul>
@@ -81,12 +77,3 @@
       </div>
     </div>
   </nav>
-
-  @yield('content')
-
-  <!-- Scripts -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="{{ asset('js/custom.js') }}"></script>
-</body>
-</html>
