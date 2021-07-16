@@ -49,5 +49,12 @@ class Daily_report_model extends CI_Model
         );
 
         return $this->db->where('id', $id)->update('daily_reports', $data);
-        }
+      }
+
+      public function getAllDailyReports($perPage, $pageNum)
+      {
+          $this->db->limit($perPage, $perPage * $pageNum);
+          $query = $this->db->get('daily_reports');
+          return $query->result_array();
+      }
 }

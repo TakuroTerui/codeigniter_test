@@ -6,18 +6,37 @@ class DailyReport extends CI_Controller {
         parent::__construct();
         $this->load->model('daily_report_model');
         $this->load->helper('url_helper');
+        $this->load->helper('form');
     }
 
     public function index()
     {
+        // Paginationライブラリ
+        $this->load->library('pagination');
+        // コントローラーでしかわからない設定を追加
+        $config['base_url'] = 'http://localhost:8080/report';			// 基準URL
+        // $config['total_rows'] = count($data['dailyReports']);	// ページ数
+        $config['total_rows'] = 5;	// ページ数
+        $config['per_page'] = 3;
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+
+        $perPage = $config['per_page'];
+        $pageNum = $this->input->get('page');
+        if (isset($pageNum)) {
+            $pageNum -- ;
+        } else {
+            $pageNum = 0;
+        }
+        $data['dailyReports'] = $this->daily_report_model->getAllDailyReports($perPage, $pageNum);
+
         $this->load->view('templates/user_header');
-        $this->load->view('user/daily_report/index');
+        $this->load->view('user/daily_report/index', $data);
         $this->load->view('templates/user_footer');
     }
 
     public function create()
     {
-        $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->helper('url');
 
@@ -47,7 +66,6 @@ class DailyReport extends CI_Controller {
 
     public function edit($id)
     {
-        $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->helper('url');
 
