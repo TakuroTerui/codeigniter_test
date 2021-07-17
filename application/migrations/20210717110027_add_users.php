@@ -13,7 +13,7 @@ class Migration_add_users extends CI_Migration
     {
         $data = array(
             array(
-              'name'          => '坂田 聖史',
+              'name'          => 'mike',
               'email'         => 'hoge@gmail.com',
               'avatar'        => 'hoge',
               'created_at'    => date("Y-m-d H:i:s")
@@ -25,7 +25,7 @@ class Migration_add_users extends CI_Migration
                 'created_at'    => date("Y-m-d H:i:s")
               ),
               array(
-                'name'          => '金谷 翔平',
+                'name'          => 'john',
                 'email'         => 'foo@gmail.com',
                 'avatar'        => 'foo',
                 'created_at'    => date("Y-m-d H:i:s")

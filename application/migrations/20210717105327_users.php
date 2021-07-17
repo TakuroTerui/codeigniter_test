@@ -12,10 +12,10 @@ class Migration_users extends CI_Migration
     public function up()
     {
         $this->dbforge->add_field(array(
-          'id' => array(
-              'type' => 'INT',
-              'unsigned' => true,
-              'auto_increment' => true
+            'id' => array(
+                'type' => 'INT',
+                'unsigned' => true,
+                'auto_increment' => true,
             ),
             'name' => array(
                 'type' => 'text'
