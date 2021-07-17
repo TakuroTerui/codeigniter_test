@@ -24,7 +24,7 @@
           <td class="col-xs-2"><?php echo date('m/d(D)', strtotime($dailyReport['reporting_time'])) ?></td>
           <td class="col-xs-3"><?php echo $dailyReport['title'] ?></td>
           <td class="col-xs-5"><?php echo $dailyReport['content'] ?></td>
-          <td class="col-xs-2"><a class="btn" href=""><i class="fa fa-book"></i></a></td>
+          <td class="col-xs-2"><a class="btn" href="<?php echo site_url('report/'. $dailyReport['id']); ?>"><i class="fa fa-book"></i></a></td>
         </tr>
       <?php endforeach; ?>
       </tbody>

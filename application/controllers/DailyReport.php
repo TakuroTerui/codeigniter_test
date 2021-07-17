@@ -98,6 +98,13 @@ class DailyReport extends CI_Controller {
         }
     }
 
+    public function show($id = Null)
+    {
+        $this->load->view('templates/user_header');
+        $this->load->view('user/daily_report/show_daily_report');
+        $this->load->view('templates/user_footer');
+    }
+
     public function _check_input_date($date)
     {
         $today = date("Y/m/d");
