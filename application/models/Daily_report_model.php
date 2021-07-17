@@ -51,6 +51,18 @@ class Daily_report_model extends CI_Model
         return $this->db->where('id', $id)->update('daily_reports', $data);
       }
 
+      public function deleteReport($id)
+      {
+        $today = date("Y-m-d H:i:s");
+
+        $data = array(
+            'update_at' => $today,
+            'deleted_at' => $today
+        );
+
+        return $this->db->where('id', $id)->update('daily_reports', $data);
+      }
+
       public function serchDailyReports($perPage, $pageNum)
       {
           $serchDate = $this->input->get('reporting_time');
