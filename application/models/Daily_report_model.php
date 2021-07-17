@@ -51,10 +51,22 @@ class Daily_report_model extends CI_Model
         return $this->db->where('id', $id)->update('daily_reports', $data);
       }
 
-      public function getAllDailyReports($perPage, $pageNum)
+      public function serchDailyReports($perPage, $pageNum)
       {
+          $serchDate = $this->input->get('reporting_time');
           $this->db->limit($perPage, $perPage * $pageNum);
+          $this->db->order_by('reporting_time', 'desc');
+          if (isset($serchDate)) {
+            $this->db->like('reporting_time', $serchDate, 'both');
+          }
+          $this->db->where('deleted_at', null);
           $query = $this->db->get('daily_reports');
           return $query->result_array();
+      }
+
+      public function countDailyReports()
+      {
+          $query = $this->db->get('daily_reports');
+          return count($query->result_array());
       }
 }

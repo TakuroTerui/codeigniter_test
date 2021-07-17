@@ -3,7 +3,7 @@
   <div class="btn-wrapper daily-report">
     <!-- TODO 日報検索機能 -->
     <?php echo form_open('report', array('method'=>'GET')); ?>
-      <?php echo form_input(array('text' => 'date', 'type' => 'month', 'class' => 'form-control', 'name' => 'reporting_time')) ?>
+      <?php echo form_input(array('text' => 'date', 'type' => 'month', 'class' => 'form-control', 'name' => 'reporting_time', 'value' => $serchDate)) ?>
       <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-icon', 'content' => '<i class="fa fa-search"></i>')) ?>
     </form>
     <a class="btn btn-icon" href="<?php echo site_url('report/create'); ?>"><i class="fa fa-plus"></i></a>
@@ -28,7 +28,9 @@
         </tr>
       <?php endforeach; ?>
       </tbody>
-      <?php echo $pagination; ?>
     </table>
+    <div class="page" type="month">
+        <?php echo $pagination; ?>
+    </div>
   </div>
 </div>
