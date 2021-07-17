@@ -1,9 +1,9 @@
 <?php
 /**
- * newsテーブルを追加する
- * Class Migration_daily_reports
+ * questionsテーブルを追加する
+ * Class Migration_comments
  */
-class Migration_daily_reports extends CI_Migration
+class Migration_comments extends CI_Migration
 {
 
     /**
@@ -12,30 +12,27 @@ class Migration_daily_reports extends CI_Migration
     public function up()
     {
         $this->dbforge->add_field(array(
-            'id' => array(
-                'type' => 'INT',
-                'unsigned' => true,
-                'auto_increment' => true
-              ),
-              'user_id' => array(
-                'type' => 'INT',
-                'unsigned' => true,
+          'id' => array(
+              'type' => 'INT',
+              'unsigned' => true,
+              'auto_increment' => true
             ),
-            'title' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
+            'user_id' => array(
+              'type' => 'INT',
+              'unsigned' => true,
+            ),
+            'question_id' => array(
+              'type' => 'INT',
+              'unsigned' => true,
             ),
             'content' => array(
                 'type' => 'TEXT',
-            ),
-            'reporting_time' => array(
-                'type' => 'DATETIME',
             ),
             'created_at' => array(
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ),
-            'update_at' => array(
+            'updated_at' => array(
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ),
@@ -45,7 +42,7 @@ class Migration_daily_reports extends CI_Migration
             ),
         ));
         $this->dbforge->add_key('id', true);
-        $this->dbforge->create_table('daily_reports', TRUE);
+        $this->dbforge->create_table('comments', true);
     }
 
     /**
@@ -54,6 +51,6 @@ class Migration_daily_reports extends CI_Migration
      */
     public function down()
     {
-        $this->dbforge->drop_table('daily_reports');
+        $this->dbforge->drop_table('comments');
     }
 }
