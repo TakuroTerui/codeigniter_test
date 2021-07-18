@@ -21,6 +21,20 @@ class Migration_add_comments extends CI_Migration
             ),
             array(
                 'user_id' => 2,
+                'question_id' => 1,
+                'content' => 'foo',
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ),
+            array(
+                'user_id' => 1,
+                'question_id' => 2,
+                'content' => 'foofoo',
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ),
+            array(
+                'user_id' => 2,
                 'question_id' => 2,
                 'content' => 'hogehoge',
                 'created_at' => date("Y-m-d H:i:s"),

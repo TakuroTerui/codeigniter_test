@@ -1,13 +1,13 @@
 <h2 class="brand-header">質問一覧</h2>
 <div class="main-wrap">
-  <form id="question-search-form">
+  <?php echo form_open('question', array('id'=>'question-search-form', 'method'=>'GET')); ?>
     <div class="btn-wrapper">
       <div class="search-box">
-        <input class="form-control search-form" placeholder="Search words..." name="search_word" type="text">
-        <button type="submit" class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <?php echo form_input(array('type' => 'text', 'class' => 'form-control search-form', 'name' => 'search_word', 'placeholder' => 'Search words...')) ?>
+        <?php echo form_button(array('type' => 'submit', 'class' => 'search-icon', 'content' => '<i class="fa fa-search" aria-hidden="true"></i>')) ?>
       </div>
-      <a class="btn" href=""><i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn" href="">
+      <a class="btn" href="<?php echo site_url('question/create'); ?>"><i class="fa fa-plus" aria-hidden="true"></i></a>
+      <a class="btn" href="<?php echo site_url('question/mypage'); ?>">
         <i class="fa fa-user" aria-hidden="true"></i>
       </a>
     </div>
@@ -16,7 +16,7 @@
       <?php foreach ($categories as $category): ?>
           <div class="btn" id="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></div>
       <?php endforeach; ?>
-      <input id="category-val" name="tag_category_id" type="hidden" value="">
+      <?php echo form_input(array('name' => 'tag_category_id', 'id' => 'category-val', 'type' => 'hidden')); ?>
     </div>
   </form>
   <div class="content-wrapper table-responsive">
@@ -35,10 +35,10 @@
         <tr class="row">
           <td class="col-xs-1"><img src="<?php echo $question['avatar'] ?>" class="avatar-img"></td>
           <td class="col-xs-2"><?php echo $question['name'] ?></td>
-          <td class="col-xs-6"><?php echo $question['title'] ?></td>
-          <td class="col-xs-1"><span class="point-color"></span></td>
+          <td class="col-xs-6"><?php echo mb_strimwidth($question['title'], 0, 30, '...') ?></td>
+          <td class="col-xs-1"><span class="point-color"><?php echo $question['cnt'] ?></span></td>
           <td class="col-xs-2">
-            <a class="btn btn-success" href="">
+            <a class="btn btn-success" href="<?php echo site_url('question/' . $question['id']); ?>">
               <i class="fa fa-comments-o" aria-hidden="true"></i>
             </a>
           </td>
@@ -46,6 +46,8 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-    <div aria-label="Page navigation example" class="text-center"></div>
+    <div aria-label="Page navigation example" class="text-center">
+      <?php echo $pagination; ?>
+    </div>
   </div>
 </div>
