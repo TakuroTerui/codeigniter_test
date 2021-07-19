@@ -27,7 +27,6 @@ class Question extends CI_Controller {
           $pageNum = 0;
         }
 
-        // $data['dailyReports'] = $this->daily_report_model->serchDailyReports($perPage, $pageNum);
         $data['categories'] = $this->tag_category_model->getCategories();
         $data['questions'] = $this->question_model->serchQuestions($perPage, $pageNum);
         $config['total_rows'] = $this->question_model->countQuestions();	// ページ数
