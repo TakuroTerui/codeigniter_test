@@ -7,6 +7,7 @@ class Question extends CI_Controller {
         $this->load->model('question_model');
         $this->load->model('tag_category_model');
         $this->load->model('comment_model');
+        $this->load->model('user_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -63,7 +64,9 @@ class Question extends CI_Controller {
 
     public function create()
     {
+        $userId = 1;   //自分のユーザーID(仮)
         $data['categories'] = $this->tag_category_model->getCategories();
+        $data['user'] = $this->user_model->getUserInfo($userId);
 
         $this->form_validation->set_rules('tag_category_id', 'date', 'required|callback__check_input_category_id',
             array(
@@ -92,7 +95,7 @@ class Question extends CI_Controller {
 
     public function mypage()
     {
-        $userId = 1;
+        $userId = 1;   //自分のユーザーID(仮)
         // // Paginationライブラリ
         $this->load->library('pagination');
         $config['base_url'] = 'http://localhost:8080/question/mypage';			// 基準URL
@@ -125,9 +128,49 @@ class Question extends CI_Controller {
 
     public function edit($id = Null)
     {
-        $this->load->view('templates/user_header');
-        $this->load->view('user/question/edit');
-        $this->load->view('templates/user_footer');
+        $userId = 1;   //自分のユーザーID(仮)
+        $data['question'] = $this->question_model->editQuestion($id, $userId);
+        $data['categories'] = $this->tag_category_model->getCategories();
+        $data['user'] = $this->user_model->getUserInfo($userId);
+
+        $this->form_validation->set_rules('tag_category_id', 'date', 'required|callback__check_input_category_id',
+            array(
+                'required' => '入力必須の項目です。'));
+        $this->form_validation->set_rules('title', '255', 'required|max_length[255]',
+            array(
+                'max_length' => '%s文字以内で入力してください。',
+                'required' => '入力必須の項目です。'));
+        $this->form_validation->set_rules('content', '1000', 'required|max_length[1000]',
+            array(
+                'max_length[1000]' => '%s文字以内で入力してください。',
+                'required' => '入力必須の項目です。'));
+
+        if (!$this->form_validation->run()) {
+            $this->load->view('templates/user_header');
+            $this->load->view('user/question/edit', $data);
+            $this->load->view('templates/user_footer');
+        }
+        else {
+            $data['input'] = $this->input->post();
+            $this->load->view('templates/user_header');
+            $this->load->view('user/question/confirm', $data);
+            $this->load->view('templates/user_footer');
+        }
+    }
+
+    public function store()
+    {
+        $userId = 1;   //自分のユーザーID(仮)
+        $this->question_model->storeQuestion($userId);
+
+        redirect('/question/mypage');
+    }
+
+    public function update($id = Null)
+    {
+        $this->question_model->updateQuestion($id);
+
+        redirect('/question/mypage');
     }
 
     public function _check_input_category_id($date)

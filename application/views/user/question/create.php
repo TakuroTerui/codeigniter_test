@@ -25,7 +25,7 @@
         <?php echo form_textarea(array('name' => 'content',  'class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => '50', 'rows' => '10')); ?>
         <span class="help-block"><?php echo form_error('content'); ?></span>
       </div>
-      <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-success pull-right', 'content' => "CREATE")) ?>
+      <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-success pull-right', 'content' => "CREATE", 'name' => 'confirm', 'value' => 'create')) ?>
     </form>
   </div>
 </div>
