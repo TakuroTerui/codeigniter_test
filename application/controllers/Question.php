@@ -6,6 +6,7 @@ class Question extends CI_Controller {
         parent::__construct();
         $this->load->model('question_model');
         $this->load->model('tag_category_model');
+        $this->load->model('comment_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -40,9 +41,24 @@ class Question extends CI_Controller {
 
     public function show($id = Null)
     {
-        $this->load->view('templates/user_header');
-        $this->load->view('user/question/show');
-        $this->load->view('templates/user_footer');
+        $data['question'] = $this->question_model->getQuestion($id);
+        $data['comments'] = $this->comment_model->getComments($id);
+
+        $this->form_validation->set_rules('comment', '100', 'required|max_length[100]',
+            array(
+                'max_length' => '%s文字以内で入力してください。',
+                'required' => '入力必須の項目です。'));
+
+        if (!$this->form_validation->run()) {
+            $this->load->view('templates/user_header');
+            $this->load->view('user/question/show', $data);
+            $this->load->view('templates/user_footer');
+        }
+        else {
+            $userId = 1;   //自分のユーザーID(仮)
+            $this->comment_model->createComment($userId, $id);
+            redirect('/question/' . $id);
+        }
     }
 
     public function create()

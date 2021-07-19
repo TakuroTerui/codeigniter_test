@@ -60,4 +60,17 @@ class Question_model extends CI_Model
 
       return $this->db->where('id', $id)->update('questions', $data);
     }
+
+    public function getQuestion($id)
+    {
+        $this->db->select('*, tag_categories.name AS category_name');
+        $this->db->from('questions');
+        $this->db->where('questions.deleted_at', null);
+        $this->db->where('questions.id', $id);
+        $this->db->order_by('questions.created_at', 'desc');
+        $this->db->join('tag_categories', 'tag_categories.id = questions.tag_category_id', 'left');
+        $this->db->join('users', 'users.id = questions.user_id', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+      }
 }
