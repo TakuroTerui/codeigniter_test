@@ -72,5 +72,46 @@ class Question_model extends CI_Model
         $this->db->join('users', 'users.id = questions.user_id', 'left');
         $query = $this->db->get();
         return $query->row_array();
-      }
+    }
+
+    public function editQuestion($id, $userId)
+    {
+        $this->db->select('*, tag_categories.name AS category_name');
+        $this->db->from('questions');
+        $this->db->where('questions.id', $id);
+        $this->db->where('user_id', $userId);
+        $this->db->join('tag_categories', 'tag_categories.id = questions.tag_category_id', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function storeQuestion($userId)
+    {
+        $today = date("Y-m-d H:i:s");
+
+        $data = array(
+            'user_id' => $userId,
+            'tag_category_id' => $this->input->post('tag_category_id'),
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content'),
+            'created_at' => $today,
+            'updated_at' => $today
+        );
+
+        return $this->db->insert('questions', $data);
+    }
+
+    public function updateQuestion($id)
+    {
+        $today = date("Y-m-d H:i:s");
+
+        $data = array(
+            'tag_category_id' => $this->input->post('tag_category_id'),
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content'),
+            'updated_at' => $today
+        );
+
+        return $this->db->where('id', $id)->update('questions', $data);
+    }
 }
