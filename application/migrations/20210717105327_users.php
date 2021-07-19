@@ -1,9 +1,9 @@
 <?php
 /**
- * newsテーブルを追加する
- * Class Migration_daily_reports
+ * questionsテーブルを追加する
+ * Class Migration_users
  */
-class Migration_daily_reports extends CI_Migration
+class Migration_users extends CI_Migration
 {
 
     /**
@@ -15,27 +15,27 @@ class Migration_daily_reports extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'unsigned' => true,
-                'auto_increment' => true
-              ),
-              'user_id' => array(
-                'type' => 'INT',
-                'unsigned' => true,
+                'auto_increment' => true,
             ),
-            'title' => array(
+            'name' => array(
+                'type' => 'text'
+            ),
+            'email' => array(
                 'type' => 'VARCHAR',
+                'unique' => true,
                 'constraint' => '255',
-            ),
-            'content' => array(
-                'type' => 'TEXT',
-            ),
-            'reporting_time' => array(
-                'type' => 'DATETIME',
+              ),
+              'avatar' => array(
+                'type' => 'VARCHAR',
+                'unique' => true,
+                'constraint' => '255',
+                'null' => true,
             ),
             'created_at' => array(
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ),
-            'update_at' => array(
+            'updated_at' => array(
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ),
@@ -45,7 +45,7 @@ class Migration_daily_reports extends CI_Migration
             ),
         ));
         $this->dbforge->add_key('id', true);
-        $this->dbforge->create_table('daily_reports', TRUE);
+        $this->dbforge->create_table('users', true);
     }
 
     /**
@@ -54,6 +54,6 @@ class Migration_daily_reports extends CI_Migration
      */
     public function down()
     {
-        $this->dbforge->drop_table('daily_reports');
+        $this->dbforge->drop_table('users');
     }
 }
