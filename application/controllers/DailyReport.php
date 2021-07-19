@@ -100,9 +100,19 @@ class DailyReport extends CI_Controller {
 
     public function show($id = Null)
     {
+        $data['dailyReport'] = $this->daily_report_model->getDailyReport($id);
+        $data['dailyReport']['reporting_time'] = date('Y/m/d(D)', strtotime($data['dailyReport']['reporting_time']));
+
         $this->load->view('templates/user_header');
-        $this->load->view('user/daily_report/show_daily_report');
+        $this->load->view('user/daily_report/show_daily_report', $data);
         $this->load->view('templates/user_footer');
+    }
+
+    public function delete($id = Null)
+    {
+        $this->daily_report_model->deleteReport($id);
+
+        redirect('/report');
     }
 
     public function _check_input_date($date)
