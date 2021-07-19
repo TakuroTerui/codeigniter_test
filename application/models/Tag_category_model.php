@@ -12,5 +12,4 @@ class Tag_category_model extends CI_Model
         $query = $this->db->get('tag_categories');
         return $query->result_array();
     }
-    
 }

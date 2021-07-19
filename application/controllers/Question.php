@@ -8,6 +8,8 @@ class Question extends CI_Controller {
         $this->load->model('tag_category_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->load->helper('url');
     }
 
     public function index()
@@ -46,9 +48,31 @@ class Question extends CI_Controller {
 
     public function create()
     {
-        $this->load->view('templates/user_header');
-        $this->load->view('user/question/create');
-        $this->load->view('templates/user_footer');
+        $data['categories'] = $this->tag_category_model->getCategories();
+
+        $this->form_validation->set_rules('tag_category_id', 'date', 'required|callback__check_input_category_id',
+            array(
+                'required' => '入力必須の項目です。'));
+        $this->form_validation->set_rules('title', '255', 'required|max_length[255]',
+            array(
+                'max_length' => '%s文字以内で入力してください。',
+                'required' => '入力必須の項目です。'));
+        $this->form_validation->set_rules('content', '1000', 'required|max_length[1000]',
+            array(
+                'max_length[1000]' => '%s文字以内で入力してください。',
+                'required' => '入力必須の項目です。'));
+
+        if (!$this->form_validation->run()) {
+            $this->load->view('templates/user_header');
+            $this->load->view('user/question/create', $data);
+            $this->load->view('templates/user_footer');
+        }
+        else {
+          $data['input'] = $this->input->post();
+            $this->load->view('templates/user_header');
+            $this->load->view('user/question/confirm', $data);
+            $this->load->view('templates/user_footer');
+        }
     }
 
     public function mypage()
@@ -89,5 +113,18 @@ class Question extends CI_Controller {
         $this->load->view('templates/user_header');
         $this->load->view('user/question/edit');
         $this->load->view('templates/user_footer');
+    }
+
+    public function _check_input_category_id($date)
+    {
+        $Categories = $this->tag_category_model->getCategories();
+        foreach ($Categories as $Category) {
+          if ($date === $Category['id']) {
+             return TRUE;
+          }
+        }
+
+        $this->form_validation->set_message('_check_input_category_id', 'カテゴリが存在しません。');
+        return FALSE;
     }
 }
