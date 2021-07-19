@@ -76,3 +76,20 @@
 #### 次回作業予定
 - Gizlogの続き
 - SQL知識深める(特に外部結合)
+
+
+### 7月18日(日)
+#### 進捗報告
+- Gizlog質問マイページ画面実装
+- Gizlog質問新規作成機能実装
+- Gizlog質問詳細画面実装
+- Gizlog質問編集機能実装
+#### 本日の学び
+- SQL知識
+#### わからなかったこと
+- コントローラーからルートへアクセスする方法↓latavelで言うとこんな感じ
+
+   return view('user.question.edit', compact('question', 'tagCategories'));
+#### 次回作業予定
+- Gizlogの続き(多対多)
+- 認証機能
