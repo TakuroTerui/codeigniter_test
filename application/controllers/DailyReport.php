@@ -6,18 +6,39 @@ class DailyReport extends CI_Controller {
         parent::__construct();
         $this->load->model('daily_report_model');
         $this->load->helper('url_helper');
+        $this->load->helper('form');
     }
 
     public function index()
     {
+        // Paginationライブラリ
+        $this->load->library('pagination');
+        $config['base_url'] = 'http://localhost:8080/report';			// 基準URL
+        $config['per_page'] = 10;			// 1ページあたりのレコード数
+
+        $perPage = $config['per_page'];
+        $pageNum = $this->input->get('page');
+        if (isset($pageNum)) {
+          $pageNum -- ;
+        } else {
+          $pageNum = 0;
+        }
+        
+        $data['serchDate'] = $this->input->get('reporting_time');
+
+        $data['dailyReports'] = $this->daily_report_model->serchDailyReports($perPage, $pageNum);
+
+        $config['total_rows'] = $this->daily_report_model->countDailyReports();	// ページ数
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+
         $this->load->view('templates/user_header');
-        $this->load->view('user/daily_report/index');
+        $this->load->view('user/daily_report/index', $data);
         $this->load->view('templates/user_footer');
     }
 
     public function create()
     {
-        $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->helper('url');
 
@@ -47,7 +68,6 @@ class DailyReport extends CI_Controller {
 
     public function edit($id)
     {
-        $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->helper('url');
 
@@ -76,6 +96,13 @@ class DailyReport extends CI_Controller {
             $this->daily_report_model->editReport($id);
             redirect('/report');
         }
+    }
+
+    public function show($id = Null)
+    {
+        $this->load->view('templates/user_header');
+        $this->load->view('user/daily_report/show_daily_report');
+        $this->load->view('templates/user_footer');
     }
 
     public function _check_input_date($date)
