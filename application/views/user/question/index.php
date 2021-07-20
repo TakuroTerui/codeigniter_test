@@ -34,7 +34,7 @@
         <?php foreach ($questions as $question): ?>
         <tr class="row">
           <td class="col-xs-1"><img src="<?php echo $question['avatar'] ?>" class="avatar-img"></td>
-          <td class="col-xs-2"><?php echo $question['category_name'] ?></td>
+          <td class="col-xs-2"><?php echo str_replace(',', ' ', $question['categories_name']) ?></td>
           <td class="col-xs-6"><?php echo mb_strimwidth($question['title'], 0, 30, '...') ?></td>
           <td class="col-xs-1"><span class="point-color"><?php echo $question['cnt'] ?></span></td>
           <td class="col-xs-2">
