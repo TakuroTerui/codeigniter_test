@@ -11,6 +11,7 @@ class Question_model extends CI_Model
     {
         $serchWord = $this->input->get('search_word');
         $tagCategoryId = $this->input->get('tag_category_id');
+        $this->db->select('*, tag_categories.name AS category_name, questions.id AS question_pk');
         $this->db->from('questions');
         $this->db->where('questions.deleted_at', null);
         $this->db->order_by('questions.created_at', 'desc');
