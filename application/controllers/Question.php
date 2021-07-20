@@ -8,6 +8,7 @@ class Question extends CI_Controller {
         $this->load->model('tag_category_model');
         $this->load->model('comment_model');
         $this->load->model('user_model');
+        $this->load->model('question_tag_categories_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -68,7 +69,7 @@ class Question extends CI_Controller {
         $data['categories'] = $this->tag_category_model->getCategories();
         $data['user'] = $this->user_model->getUserInfo($userId);
 
-        $this->form_validation->set_rules('tag_category_id', 'date', 'required|callback__check_input_category_id',
+        $this->form_validation->set_rules('tag_category_id[]', 'date', 'required',
             array(
                 'required' => '入力必須の項目です。'));
         $this->form_validation->set_rules('title', '255', 'required|max_length[255]',
@@ -86,7 +87,7 @@ class Question extends CI_Controller {
             $this->load->view('templates/user_footer');
         }
         else {
-          $data['input'] = $this->input->post();
+            $data['input'] = $this->input->post();
             $this->load->view('templates/user_header');
             $this->load->view('user/question/confirm', $data);
             $this->load->view('templates/user_footer');
@@ -130,10 +131,11 @@ class Question extends CI_Controller {
     {
         $userId = 1;   //自分のユーザーID(仮)
         $data['question'] = $this->question_model->editQuestion($id, $userId);
+        $data['question']['categories_name'] = explode(',', $data['question']['categories_name']);
         $data['categories'] = $this->tag_category_model->getCategories();
         $data['user'] = $this->user_model->getUserInfo($userId);
 
-        $this->form_validation->set_rules('tag_category_id', 'date', 'required|callback__check_input_category_id',
+        $this->form_validation->set_rules('tag_category_id[]', 'date', 'required',
             array(
                 'required' => '入力必須の項目です。'));
         $this->form_validation->set_rules('title', '255', 'required|max_length[255]',
@@ -161,25 +163,30 @@ class Question extends CI_Controller {
     public function store()
     {
         $userId = 1;   //自分のユーザーID(仮)
-        $this->question_model->storeQuestion($userId);
+        $categoriesId = $this->input->post('tag_category_id');
+        $questionId = $this->question_model->storeQuestion($userId);
+        $this->question_tag_categories_model->storeQuestionTagCategories($categoriesId, $questionId);
 
         redirect('/question/mypage');
     }
 
     public function update($id = Null)
     {
+        $categoriesId = $this->input->post('tag_category_id');
         $this->question_model->updateQuestion($id);
+        $this->question_tag_categories_model->updateQuestionTagCategories($categoriesId, $id);
 
         redirect('/question/mypage');
     }
 
-    public function _check_input_category_id($date)
+    public function _check_input_category_id()
     {
         $Categories = $this->tag_category_model->getCategories();
+        $inputCategories = $this->input->post();
         foreach ($Categories as $Category) {
-          if ($date === $Category['id']) {
-             return TRUE;
-          }
+            if (in_array($Category['id'], $inputCategories)) {
+              return TRUE;
+            }
         }
 
         $this->form_validation->set_message('_check_input_category_id', 'カテゴリが存在しません。');

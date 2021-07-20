@@ -18,16 +18,16 @@
         <?php foreach ($questions as $question): ?>
         <tr class="row">
           <td class="col-xs-2"><?php echo date('Y-m-d', strtotime($question['created_at'])) ?></td>
-          <td class="col-xs-1"><?php echo $question['category_name'] ?></td>
+          <td class="col-xs-1"><?php echo str_replace(',', ' ', $question['categories_name']) ?></td>
           <td class="col-xs-5"><?php echo $question['title'] ?></td>
           <td class="col-xs-2"><span class="point-color"><?php echo $question['cnt'] ?></span></td>
           <td class="col-xs-1">
-            <a class="btn btn-success" href="<?php echo site_url('question/' . $question['id'] . '/edit'); ?>">
+            <a class="btn btn-success" href="<?php echo site_url('question/' . $question['question_pk'] . '/edit'); ?>">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
           </td>
           <td class="col-xs-1">
-            <?php echo form_open('question/delete' . $question['id']); ?>
+            <?php echo form_open('question/delete/' . $question['question_pk']); ?>
               <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-danger', 'content' => '<i class="fa fa-trash-o" aria-hidden="true"></i>')) ?>
             </form>
           </td>

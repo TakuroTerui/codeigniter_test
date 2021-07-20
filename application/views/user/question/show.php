@@ -3,7 +3,7 @@
   <div class="panel panel-success">
     <div class="panel-heading">
       <img src="<?php echo $question['avatar'] ?>" class="avatar-img">
-      <p>&nbsp;<?php echo $question['name'] ?>さんの質問&nbsp;&nbsp;(&nbsp; <?php echo $question['category_name'] ?> &nbsp;)</p>
+      <p>&nbsp;<?php echo $question['name'] ?>さんの質問&nbsp;&nbsp;(&nbsp; <?php echo str_replace(',', ' ', $question['categories_name']) ?> &nbsp;)</p>
       <p class="question-date"><?php echo date('Y-m-d H:i', strtotime($question['created_at'])) ?></p>
     </div>
     <div class="table-responsive">
@@ -34,8 +34,8 @@
       <?php endforeach; ?>
     </div>
   <div class="comment-box">
-    <?php echo form_open('question/' . $question['id'], array('method'=>'POST')); ?>
-      <?php echo form_input(array('name' => 'question_id', 'type' => 'hidden', 'value' => $question['id'])); ?>
+    <?php echo form_open('question/' . $question['question_pk'], array('method'=>'POST')); ?>
+      <?php echo form_input(array('name' => 'question_id', 'type' => 'hidden', 'value' => $question['question_pk'])); ?>
       <div class="comment-title">
         <img src="" class="avatar-img"><p>コメントを投稿する</p>
       </div>
