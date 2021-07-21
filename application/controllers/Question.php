@@ -11,8 +11,13 @@ class Question extends CI_Controller {
         $this->load->model('question_tag_categories_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
+        $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->helper('url');
+
+        if($this->session->userdata('logged_in') !== TRUE){
+            $this->load->view('user/login_view');
+        }
     }
 
     public function index()
