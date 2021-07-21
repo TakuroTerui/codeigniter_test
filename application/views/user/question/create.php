@@ -5,13 +5,17 @@
       <div class="form-group <?php if (form_error('tag_category_id')): ?>
         has-error
       <?php endif; ?>">
-        <select name='tag_category_id' class="form-control selectpicker form-size-small">
-          <option value="">Select category</option>
+        <div class="form-group form-inline">
           <?php foreach ($categories as $category): ?>
-            <option value= "<?php echo $category['id'] ?>"><?php echo $category['name'] ?></option>
+            <label class="checkbox-inline">
+              <?php echo form_input(array('name' => 'tag_category_id[]', 'type' => 'checkbox', 'value' => $category['id'])); ?>
+              <?php echo $category['name'] ?>
+            </label>
           <?php endforeach; ?>
-        </select>
-        <span class="help-block"><?php echo form_error('tag_category_id'); ?></span>
+        </div>
+        <div class="has-error">
+          <span class="help-block"><?php echo form_error('tag_category_id'); ?></span>
+        </div>
       </div>
       <div class="form-group <?php if (form_error('title')): ?>
         has-error

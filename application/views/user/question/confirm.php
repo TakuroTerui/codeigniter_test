@@ -23,9 +23,11 @@
     <?php if ($input['confirm'] === 'create'): ?>
       <?php echo form_open('question/store', array('method'=>'POST')); ?>
     <?php else: ?>
-      <?php echo form_open('question/' . $question['id'] . '/update', array('method'=>'POST')); ?>
+      <?php echo form_open('question/' . $question['question_pk'] . '/update', array('method'=>'POST')); ?>
     <?php endif; ?>
-      <input name="tag_category_id" type="hidden" value="<?php echo $input['tag_category_id'] ?>">
+      <?php foreach ($input['tag_category_id'] as $categoryId): ?>
+        <input name="tag_category_id[]" type="hidden" value="<?php echo $categoryId ?>">
+      <?php endforeach; ?>
       <input name="title" type="hidden" value="<?php echo $input['title'] ?>">
       <input name="content" type="hidden" value="<?php echo $input['content'] ?>">
       <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-success', 'content' => '<i class="fa fa-check" aria-hidden="true"></i>')) ?>
