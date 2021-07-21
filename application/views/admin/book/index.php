@@ -1,13 +1,12 @@
 <h2 class="brand-header">書籍購入情報一覧</h2>
 <div class="main-wrap">
   <div class="btn-wrapper">
-    <!-- <form> -->
-    <?php echo $error;?>
-    <?php  var_dump($_FILES['csvfile']) ?>
     <?php echo form_open_multipart('book', array('method'=>'POST')); ?>
-      <div class="form-group has-error">
+      <div class="form-group <?php if (form_error('csvfile')): ?>
+        has-error
+      <?php endif; ?>">
         <input type="file" class="form-control" name="csvfile" value="">
-        <span class="help-block"></span>
+        <span class="help-block"><?php echo form_error('csvfile') ?><?= $successMessage ?></span>
         <button type="submit" class="btn btn-icon"><i class="fa fa-file"></i></button>
       </div>
     </form>
@@ -25,15 +24,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="row">
-          <td class="col-xs-1"><img src="" alt="" class="avatar-img"></td>
-          <td class="col-xs-4"></td>
-          <td class="col-xs-2"></td>
-          <td class="col-xs-2"></td>
-          <td class="col-xs-1"></td>
-          <td class="col-xs-2"></td>
-        </tr>
+        <?php foreach ($books as $book): ?>
+          <tr class="row">
+            <td class="col-xs-1"><img src="<?php echo $book['avatar'] ?>" alt="" class="avatar-img"></td>
+            <td class="col-xs-4"><?php echo $book['title'] ?></td>
+            <td class="col-xs-2"><?php echo $book['author'] ?></td>
+            <td class="col-xs-2"><?php echo $book['publisher'] ?></td>
+            <td class="col-xs-1"><?php echo number_format($book['price']) ?></td>
+            <td class="col-xs-2"><?php echo date('Y-m-d', strtotime($book['purchase_date'])) ?></td>
+          </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
+    <?php echo $pagination; ?>
   </div>
 </div>
