@@ -7,6 +7,10 @@ class DailyReport extends CI_Controller {
         $this->load->model('daily_report_model');
         $this->load->helper('url_helper');
         $this->load->helper('form');
+
+        if(!$this->session->userdata('logged_in')){
+          redirect('login');
+        }
     }
 
     public function index()

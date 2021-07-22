@@ -39,7 +39,8 @@ class Login extends CI_Controller{
             $user_id        =   $data['id'];       // ユーザーIDを格納
             $name           =   $data['name'];          // 名前を格納
             $email          =   $data['email'];         // メールアドレスを格納
-            $logged_in      =   $data['logged_in'];     // ログイン状態TRUE FALSE
+            $is_admin       =   $data['admin'];      // 管理者か否かの判定用(0: ×, 1: 〇)
+            // $logged_in      =   $data['logged_in'];     // ログイン状態TRUE FALSE
 
             // セッション配列に格納
             $sesdata = array(

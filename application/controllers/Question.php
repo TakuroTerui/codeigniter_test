@@ -15,8 +15,8 @@ class Question extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->helper('url');
 
-        if($this->session->userdata('logged_in') !== TRUE){
-            $this->load->view('user/login_view');
+        if(!$this->session->userdata('logged_in')){
+            redirect('login');
         }
     }
 

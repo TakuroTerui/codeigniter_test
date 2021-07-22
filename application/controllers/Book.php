@@ -19,6 +19,11 @@ class Book extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->helper('url');
+        $this->load->library('session');
+
+        if($this->session->userdata('logged_in') == false | $this->session->userdata('admin') == 0){
+          redirect('login');
+        }
     }
 
     public function index()
